@@ -1,22 +1,42 @@
+const players = [
+  {
+    name: "Matto",
+    score: 50,
+    id: 1
+  },
+  {
+    name: "Jiji",
+    score: 85,
+    id: 2
+  },
+  {
+    name: "Hammond",
+    score: 95,
+    id: 3
+  },
+  {
+    name: "Mittens",
+    score: 80,
+    id: 4
+  },
+];
+
 const Header = (props) => {
   return (
     <header>
-      <h1>{ props.title }</h1>
-      <span className="stats">Players: { props.totalPlayers }</span>
+      <h1>{props.title}</h1>
+      <span className="stats">Players: {props.totalPlayers}</span>
     </header>
   );
-}
+};
 
 const Player = (props) => {
   return (
     <div className="player">
-      <span className="player-name">
-      {props.name}
-      </span>
+      <span className="player-name">{props.name}</span>
 
-      <Counter score={ props.score } />
+      <Counter score={props.score} />
     </div>
-
   );
 };
 
@@ -24,29 +44,33 @@ const Counter = (props) => {
   return (
     <div className="counter">
       <button className="counter-action decrement"> - </button>
-      <span className="counter-score">{ props.score }</span>
+      <span className="counter-score">{props.score}</span>
       <button className="counter-action increment"> + </button>
     </div>
   );
 };
 
-const App = () => {
+const App = (props) => {
   return (
     <div className="scoreboard">
-      <Header title="Scoreboard" totalPlayers={1} />
+      <Header 
+        title="Scoreboard" 
+        totalPlayers={props.initialPlayers.length} 
+      />
 
       {/* Players list  */}
-      <Player name="Matto" score={50} />
-      <Player name="Attacko" score={51} />
-      <Player name="Skinny Pete" score={92} />
-      <Player name="Larry" score={1} />
-      <Player name="Jiji" score={808} />
-
+      {props.initialPlayers.map( player => 
+        <Player
+          name={player.name}
+          score={player.score}
+          key={player.id.toString()}
+        />
+      )}
     </div>
   );
-}
+};
 
 ReactDOM.app.render(
-  <App />,
-  document.getElementById('root')
+  <App initialPlayers={players} />,
+  document.getElementById("root")
 );
